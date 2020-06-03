@@ -1,5 +1,16 @@
 package com.rsit.ats.service;
 
+import static com.rsit.util.CommonUtils.APPLICANT;
+import static com.rsit.util.CommonUtils.ID;
+import static com.rsit.util.CommonUtils.INTERNAL_SERVER_ERROR;
+import static com.rsit.util.CommonUtils.MESSAGE2;
+import static com.rsit.util.CommonUtils.NOT_FOUND;
+import static com.rsit.util.CommonUtils.PROFILE_SUCCESSFULLY_CREATED;
+import static com.rsit.util.CommonUtils.PROFILE_SUCCESSFULLY_DELETED;
+import static com.rsit.util.CommonUtils.PROFILE_SUCCESSFULLY_UPDATED;
+import static com.rsit.util.CommonUtils.QUERY;
+import static com.rsit.util.CommonUtils.RESULT;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,20 +35,28 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rsit.ats.client.AmazonClient;
 import com.rsit.ats.client.ElasticHttpClient;
 import com.rsit.ats.model.Applicant;
 import com.rsit.ats.model.SystemMessage;
-
-import static com.rsit.util.CommonUtils.*;
 
 @Service
 public class ApplicantService {
 	
 	@Autowired
 	private ElasticHttpClient elasticHttp;
+	
+	@Autowired
+	private AmazonClient amazonClient;
+	
+	@Value("${file.upload-dir}")
+	private String folder;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public SystemMessage getApplicantById(String id) {
@@ -180,6 +199,26 @@ public class ApplicantService {
 				message.setStatus(status);
 				message.setResult(NOT_FOUND);
 			}
+		} catch (IOException e) {
+			message = new SystemMessage<String>();
+			message.setStatus(500);
+			message.setResult(INTERNAL_SERVER_ERROR);
+		}
+		return message;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public SystemMessage uploadResume(MultipartFile file, String id) {
+		
+		SystemMessage message = null;
+		try {
+			String url = amazonClient.uploadFile(file, id);
+			message = new SystemMessage<Map<String, String>>();
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "file successfully updated");
+			map.put("url", url);
+			message.setStatus(200);
+			message.setResult(map);
 		} catch (IOException e) {
 			message = new SystemMessage<String>();
 			message.setStatus(500);

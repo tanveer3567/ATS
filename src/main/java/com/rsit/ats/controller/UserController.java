@@ -1,13 +1,7 @@
 package com.rsit.ats.controller;
 
-import java.util.Objects;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +13,10 @@ import com.rsit.ats.model.SystemMessage;
 import com.rsit.ats.model.User;
 import com.rsit.ats.service.UserService;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @RestController
+@EnableSwagger2
 @RequestMapping("/user")
 public class UserController {
 
