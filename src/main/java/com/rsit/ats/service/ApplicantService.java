@@ -54,9 +54,6 @@ public class ApplicantService {
 	
 	@Autowired
 	private AmazonClient amazonClient;
-	
-	@Value("${file.upload-dir}")
-	private String folder;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public SystemMessage getApplicantById(String id) {

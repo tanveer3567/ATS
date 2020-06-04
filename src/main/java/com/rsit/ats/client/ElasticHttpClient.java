@@ -10,14 +10,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ElasticHttpClient {
 
-	@Value("localhost")
+	@Value("search-rsrit-ats-emlpc6tnpjqvilurwvadrn2w4u.us-east-2.es.amazonaws.com")
 	private String hostname;
-	@Value("9200")
+	
+	@Value(value = "443")
 	private int port;
 
 	@Bean(destroyMethod = "close")
 	public RestHighLevelClient getClient() {
 
-		return new RestHighLevelClient(RestClient.builder(new HttpHost(hostname, port)));
+		RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(new HttpHost(hostname, port, "https")));
+		System.out.println(client.toString());
+		return client;
 	}
 }
