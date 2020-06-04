@@ -11,7 +11,6 @@ import static com.rsit.util.CommonUtils.PROFILE_SUCCESSFULLY_UPDATED;
 import static com.rsit.util.CommonUtils.QUERY;
 import static com.rsit.util.CommonUtils.RESULT;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -35,8 +34,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,6 +42,7 @@ import com.rsit.ats.client.AmazonClient;
 import com.rsit.ats.client.ElasticHttpClient;
 import com.rsit.ats.model.Applicant;
 import com.rsit.ats.model.SystemMessage;
+import com.rsit.ats.model.UploadResponse;
 
 @Service
 public class ApplicantService {
@@ -73,7 +71,7 @@ public class ApplicantService {
 				message.setStatus(404);
 				message.setResult(NOT_FOUND);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			message = new SystemMessage<String>();
 			message.setStatus(500);
 			message.setResult(INTERNAL_SERVER_ERROR);
@@ -102,7 +100,7 @@ public class ApplicantService {
 				message.setStatus(status);
 				message.setResult(NOT_FOUND);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			message = new SystemMessage<String>();
 			message.setStatus(500);
 			message.setResult(INTERNAL_SERVER_ERROR);
@@ -131,7 +129,7 @@ public class ApplicantService {
 				message.setStatus(status);
 				message.setResult(NOT_FOUND);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			message = new SystemMessage<String>();
 			message.setStatus(500);
 			message.setResult(INTERNAL_SERVER_ERROR);
@@ -159,7 +157,7 @@ public class ApplicantService {
 				message.setStatus(status);
 				message.setResult(NOT_FOUND);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			message = new SystemMessage<String>();
 			message.setStatus(500);
 			message.setResult(INTERNAL_SERVER_ERROR);
@@ -196,7 +194,7 @@ public class ApplicantService {
 				message.setStatus(status);
 				message.setResult(NOT_FOUND);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			message = new SystemMessage<String>();
 			message.setStatus(500);
 			message.setResult(INTERNAL_SERVER_ERROR);
@@ -205,22 +203,34 @@ public class ApplicantService {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public SystemMessage uploadResume(MultipartFile file, String id) {
+	public SystemMessage uploadResume(MultipartFile file) {
 		
 		SystemMessage message = null;
 		try {
-			String url = amazonClient.uploadFile(file, id);
+			UploadResponse uploadResponse = amazonClient.uploadFile(file);
 			message = new SystemMessage<Map<String, String>>();
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("message", "file successfully updated");
-			map.put("url", url);
 			message.setStatus(200);
-			message.setResult(map);
-		} catch (IOException e) {
+			message.setResult(uploadResponse);
+		} catch (Exception e) {
 			message = new SystemMessage<String>();
 			message.setStatus(500);
 			message.setResult(INTERNAL_SERVER_ERROR);
 		}
 		return message;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Object downloadResume(String key) {
+		
+		byte[] file = null;
+		SystemMessage message = null;
+		try {
+			file = amazonClient.downloadFileFromS3bucket(key);
+		} catch (Exception e) {
+			message = new SystemMessage<String>();
+			message.setStatus(500);
+			message.setResult(INTERNAL_SERVER_ERROR);
+		}
+		return file;
 	}
 }

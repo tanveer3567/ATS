@@ -71,10 +71,15 @@ public class ApplicantController {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@PostMapping(value = "/upload/{username}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public SystemMessage uploadResume(@RequestHeader(name = "Authorization", required = true) String authorization,
-			@PathVariable(name = "username") String id, @RequestParam("file") MultipartFile file) {
+	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public SystemMessage uploadResume(@RequestHeader(name = "Authorization", required = true) String authorization, @RequestParam("file") MultipartFile file) {
 
-		return applicatService.uploadResume(file, id);
+		return applicatService.uploadResume(file);
+	}
+	
+	@GetMapping(value = "/download/{key}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public Object downloadResume(@RequestHeader(name = "Authorization", required = true) String authorization, @PathVariable("key") String key) {
+
+		return applicatService.downloadResume(key);
 	}
 }

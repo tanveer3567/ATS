@@ -62,7 +62,7 @@ public class UserService implements UserDetailsService {
 				message.setStatus(status);
 				message.setResult("User already exists");
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			message = new SystemMessage<String>();
 			message.setStatus(500);
 			message.setResult(INTERNAL_SERVER_ERROR);
