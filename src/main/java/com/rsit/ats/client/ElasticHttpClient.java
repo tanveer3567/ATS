@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ElasticHttpClient {
 
-	@Value("search-rsrit-ats-emlpc6tnpjqvilurwvadrn2w4u.us-east-2.es.amazonaws.com")
+	@Value("${amazonProperties.esEndpoint}")
 	private String hostname;
 	
 	@Value(value = "443")
