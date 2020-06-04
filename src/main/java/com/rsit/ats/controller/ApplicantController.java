@@ -48,7 +48,7 @@ public class ApplicantController {
 
 	@SuppressWarnings("rawtypes")
 	@PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public SystemMessage addApplicant(@RequestHeader(name = "Authorization", required = true) String authorization,
+	public SystemMessage updateApplicantById(@RequestHeader(name = "Authorization", required = true) String authorization,
 			@RequestBody Applicant applicant, @PathVariable(name = "id") String id) {
 
 		return applicatService.updateApplicant(applicant, id);
@@ -56,7 +56,7 @@ public class ApplicantController {
 
 	@SuppressWarnings("rawtypes")
 	@DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public SystemMessage addApplicant(@RequestHeader(name = "Authorization", required = true) String authorization,
+	public SystemMessage deleteApplicantById(@RequestHeader(name = "Authorization", required = true) String authorization,
 			@PathVariable(name = "id") String id) {
 
 		return applicatService.deleteApplicant(id);
@@ -64,7 +64,7 @@ public class ApplicantController {
 
 	@SuppressWarnings("rawtypes")
 	@PostMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public SystemMessage addApplicant(@RequestHeader(name = "Authorization", required = true) String authorization,
+	public SystemMessage searchApplicant(@RequestHeader(name = "Authorization", required = true) String authorization,
 			@RequestBody Map<String, Object> searchMap) {
 
 		return applicatService.searchApplicant(searchMap);
@@ -78,7 +78,7 @@ public class ApplicantController {
 	}
 	
 	@GetMapping(value = "/download/{key}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public Object downloadResume(@RequestHeader(name = "Authorization", required = true) String authorization, @PathVariable("key") String key) {
+	public Object downloadResumeByKey(@RequestHeader(name = "Authorization", required = true) String authorization, @PathVariable("key") String key) {
 
 		return applicatService.downloadResume(key);
 	}
