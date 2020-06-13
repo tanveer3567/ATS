@@ -2,8 +2,8 @@ package com.rsit.ats.model;
 
 public class User {
 
-	private String username;
-	private String password;
+	public String username;
+	public String password;
 	
 	public String getUsername() {
 		return username;

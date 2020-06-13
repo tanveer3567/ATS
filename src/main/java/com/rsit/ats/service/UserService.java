@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rsit.ats.client.ElasticHttpClient;
 import com.rsit.ats.model.SystemMessage;
 import com.rsit.ats.model.User;
+import com.rsit.ats.model.UserRegister;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -41,7 +42,7 @@ public class UserService implements UserDetailsService {
 	private AuthenticationManager authenticationManager;
 
 	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation"})
-	public SystemMessage register(User user) {
+	public SystemMessage register(UserRegister  user) {
 
 		SystemMessage message = null;
 		try {
@@ -100,7 +101,7 @@ public class UserService implements UserDetailsService {
 			GetResponse response = elasticHttp.getClient().get(request, RequestOptions.DEFAULT);
 			String source = response.getSourceAsString();
 			if (Objects.nonNull(source)) {
-				User dbUser = new ObjectMapper().readValue(source, User.class);
+				User dbUser = new ObjectMapper().readValue(source, UserRegister.class);
 				user = new org.springframework.security.core.userdetails.User(dbUser.getUsername(), dbUser.getPassword(),
 						new ArrayList<>());
 			} else {

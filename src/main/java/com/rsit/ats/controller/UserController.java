@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rsit.ats.config.JwtTokenUtil;
 import com.rsit.ats.model.SystemMessage;
 import com.rsit.ats.model.User;
+import com.rsit.ats.model.UserRegister;
 import com.rsit.ats.service.UserService;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -28,7 +29,7 @@ public class UserController {
 
 	@SuppressWarnings("rawtypes")
 	@PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public SystemMessage register(@RequestBody User user) {
+	public SystemMessage register(@RequestBody UserRegister user) {
 		
 		return userService.register(user);
 	}
