@@ -10,11 +10,9 @@ public class EduAndExp {
     private List<WorkExperience> workExperience;
     private List<String> skills;
     
+	
 	public List<Education> getEducation() {
 		return education;
-	}
-	public void setEducations(List<Education> educations) {
-		this.education = educations;
 	}
 	public Integer getYearsOfExperience() {
 		return yearsOfExperience;
