@@ -178,7 +178,6 @@ public class ApplicantService {
 			if (status == 200) {
 				message = new SystemMessage<Map<String, List<Map<String, Object>>>>();
 				SearchHit[] hits = response.getHits().getHits();
-				Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>();
 				List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
 				for (SearchHit hit : hits) {
 					Map<String, Object> sourceMap = new LinkedHashMap<String, Object>();
@@ -186,9 +185,8 @@ public class ApplicantService {
 					sourceMap.put(APPLICANT, new ObjectMapper().readValue(hit.getSourceAsString(), Applicant.class));
 					resultList.add(sourceMap);
 				}
-				map.put(RESULT, resultList);
 				message.setStatus(status);
-				message.setResult(map);
+				message.setResult(resultList);
 			} else {
 				message = new SystemMessage<String>();
 				message.setStatus(status);

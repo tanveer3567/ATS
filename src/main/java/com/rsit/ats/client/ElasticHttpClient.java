@@ -13,7 +13,7 @@ public class ElasticHttpClient {
 	@Value("${amazonProperties.esEndpoint}")
 	private String hostname;
 	
-	@Value(value = "443")
+	@Value("${amazonProperties.esPort}")
 	private int port;
 
 	@Bean(destroyMethod = "close")

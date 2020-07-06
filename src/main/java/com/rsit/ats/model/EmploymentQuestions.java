@@ -2,20 +2,20 @@ package com.rsit.ats.model;
 
 public class EmploymentQuestions {
 
-	private Boolean workedBefore;
+	private String workedBefore;
 	private String previousWorkDetails;
-	private Boolean workAuthorization;
+	private String workAuthorization;
 	private String typeOfAuthorization;
-    private Boolean clearance;
+    private String clearance;
     private String typeOfClearence;
-    private Boolean relocation;
+    private String relocation;
     private Double expectedAnnualPay;
     
     
-	public Boolean getWorkedBefore() {
+	public String getWorkedBefore() {
 		return workedBefore;
 	}
-	public void setWorkedBefore(Boolean workedBefore) {
+	public void setWorkedBefore(String workedBefore) {
 		this.workedBefore = workedBefore;
 	}
 	public String getPreviousWorkDetails() {
@@ -24,10 +24,10 @@ public class EmploymentQuestions {
 	public void setPreviousWorkDetails(String previousWorkDetails) {
 		this.previousWorkDetails = previousWorkDetails;
 	}
-	public Boolean getWorkAuthorization() {
+	public String getWorkAuthorization() {
 		return workAuthorization;
 	}
-	public void setWorkAuthorization(Boolean workAuthorization) {
+	public void setWorkAuthorization(String workAuthorization) {
 		this.workAuthorization = workAuthorization;
 	}
 	public String getTypeOfAuthorization() {
@@ -42,10 +42,10 @@ public class EmploymentQuestions {
 	public void setExpectedAnnualPay(Double expectedAnnualPay) {
 		this.expectedAnnualPay = expectedAnnualPay;
 	}
-	public Boolean getClearance() {
+	public String getClearance() {
 		return clearance;
 	}
-	public void setClearance(Boolean clearance) {
+	public void setClearance(String clearance) {
 		this.clearance = clearance;
 	}
 	public String getTypeOfClearence() {
@@ -54,10 +54,10 @@ public class EmploymentQuestions {
 	public void setTypeOfClearence(String typeOfClearence) {
 		this.typeOfClearence = typeOfClearence;
 	}
-	public Boolean getRelocation() {
+	public String getRelocation() {
 		return relocation;
 	}
-	public void setRelocation(Boolean relocation) {
+	public void setRelocation(String relocation) {
 		this.relocation = relocation;
 	}
 }
