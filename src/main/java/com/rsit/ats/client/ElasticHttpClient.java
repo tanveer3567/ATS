@@ -16,10 +16,14 @@ public class ElasticHttpClient {
 	@Value("${amazonProperties.esPort}")
 	private int port;
 
+	@Value("${amazonProperties.esScheme:https}")
+	private String scheme;
+
 	@Bean(destroyMethod = "close")
 	public RestHighLevelClient getClient() {
 
-		RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(new HttpHost(hostname, port, "https")));
+		RestHighLevelClient client = new RestHighLevelClient(
+				RestClient.builder(new HttpHost(hostname, port, scheme)));
 		System.out.println(client.toString());
 		return client;
 	}

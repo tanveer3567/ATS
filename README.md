@@ -97,6 +97,12 @@ amazonProperties.esPort=443
 ```bash
 git clone https://github.com/tanveer3567/ATS.git
 cd ATS
+cp src/main/resources/application.properties.example src/main/resources/application.properties
+# Edit application.properties with your S3 credentials
+
+# Start local Elasticsearch
+docker compose up -d
+
 mvn clean install
 mvn spring-boot:run
 ```

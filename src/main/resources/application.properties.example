@@ -1,0 +1,15 @@
+# JWT
+jwt.secret=change-me-in-production
+
+# AWS S3 (use real AWS credentials or configure MinIO separately)
+amazonProperties.endpointUrl=https://s3.amazonaws.com
+amazonProperties.bucketName=your-bucket-name
+amazonProperties.accessKey=your-access-key
+amazonProperties.secretKey=your-secret-key
+
+# Elasticsearch
+# Local Docker: hostname=localhost, port=9200, esScheme=http
+# AWS OpenSearch: hostname=your-domain.region.es.amazonaws.com, port=443, esScheme=https
+amazonProperties.esEndpoint=localhost
+amazonProperties.esPort=9200
+amazonProperties.esScheme=http
